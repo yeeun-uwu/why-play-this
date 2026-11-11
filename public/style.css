@@ -18,7 +18,7 @@ h2 { margin: 0; font-size: 31px; line-height: 1.4; letter-spacing: -1px; }
 footer { font-size: 11px; color: #7f8879; display: flex; justify-content: space-between; }
 @media(max-width:600px) { main { padding: 35px 24px; } header { justify-content: space-between; gap: 10px; } header p { font-size: 10px; } .game { grid-template-columns: 1fr; gap: 35px; margin-top: 30px; } .label { padding-left: 12px; } h2 { font-size: 28px; } .drawing { height: 230px; } }
 
-.drawing img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; image-rendering: pixelated; }
+.drawing img { width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: 50% 55%; image-rendering: pixelated; }
 .prototype-link { display: flex; align-items: center; gap: 12px; margin: -15px 0 35px; padding: 18px 0; border-bottom: 1px solid #4c5145; font-size: 14px; }
 .prototype-link span { color: #dbbd8b; font-size: 10px; }
 .prototype-link b { margin-left: auto; }
