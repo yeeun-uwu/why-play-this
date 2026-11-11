@@ -2,7 +2,9 @@
 
 이상한 미니게임 보관함. 첫 게임은 **전자레인지 1초 전에 끄기**입니다.
 
-## 실행
+바로 플레이: [게임 목록](https://yeeun-uwu.github.io/why-play-this/) · [전자레인지](https://yeeun-uwu.github.io/why-play-this/microwave/) · [의자로 퇴근하기](https://yeeun-uwu.github.io/why-play-this/chair/)
+
+## 로컬 개발
 
 Node.js 22.12 이상 또는 24 이상을 사용합니다.
 
@@ -15,12 +17,11 @@ npm run build
 npm run preview
 ```
 
-메인: `http://127.0.0.1:4173/why-play-this/`
-게임: `http://127.0.0.1:4173/why-play-this/microwave/`
+개발 서버: `http://127.0.0.1:4173/why-play-this/` (개발용 컴퓨터에서만 접속)
 
 ## 의자로 퇴근하기 — 재미 검증 시연
 
-`http://127.0.0.1:4173/why-play-this/chair/`
+[공개 게임 플레이](https://yeeun-uwu.github.io/why-play-this/chair/)
 
 의자를 가고 싶은 방향으로 드래그했다 놓으면 바닥을 한 번 찹니다. 길게 끌수록 세게 밀리며, 움직이는 중에도 반대쪽으로 밀어 제동할 수 있습니다. 세 번 안에 의자 전체가 엘리베이터 안에서 멈추면 성공합니다. 책상은 고정되어 있고 쓰레기통은 밀립니다. 지나온 경로와 발구르기 위치가 결과에 남습니다.
 
@@ -85,10 +86,14 @@ npm run preview
 
 Vite는 목록, 전자레인지, 전자레인지 3D 시연, 의자 퇴근 시연의 HTML 진입점을 `dist/`로 빌드합니다. 프로젝트 기본 경로는 `/why-play-this/`이고 게임별 `index.html`을 제공하므로 하위 페이지 직접 접속이 됩니다.
 
-`.github/workflows/pages.yml`은 **수동 실행 전용**입니다. 별도 게시 승인 후 main에 올리고, 저장소 Pages의 Source를 GitHub Actions로 설정한 다음 워크플로를 main에서 실행합니다. npm ci → 테스트 → 빌드가 통과한 뒤 `dist/`만 게시합니다.
+2026-11-11에 GitHub Pages 공개 배포를 완료했습니다. 저장소 Pages는 GitHub Actions 방식으로 설정되어 있습니다.
 
-예상 게시 URL: `https://yeeun-uwu.github.io/why-play-this/`
+공개 사이트: [이걸왜함](https://yeeun-uwu.github.io/why-play-this/)
+
+`.github/workflows/pages.yml`은 **수동 실행 전용**입니다. 이후 배포도 별도 게시 승인 후 변경을 main에 반영하고 워크플로를 main에서 실행합니다. npm ci → 테스트 → 빌드가 통과한 뒤 `dist/`만 게시합니다.
+
+최초 배포에서는 테스트 51개·빌드·Pages 게시를 통과했습니다. 공개 주소에서 게임 목록, 전자레인지 시작/정지, 의자 입력·일시정지·재시작·도감, 각 게임과 3D 시연의 직접 접속을 확인했습니다. 메인과 의자 화면은 320px에서도 가로 넘침이 없음을 확인했습니다. [배포 실행 기록](https://github.com/yeeun-uwu/why-play-this/actions/runs/42967216999)
 
 설정 참고: https://vite.dev/guide/static-deploy.html#github-pages
 
-실제 모바일 터치·스피커 청음·스크린리더 및 GitHub 공개 배포는 별도 확인 대상입니다.
+실제 모바일 터치·스피커 청음·스크린리더는 아직 별도 확인 대상입니다. 로컬 개발 주소의 최고 기록·도감은 공개 사이트로 자동 이전되지 않습니다.
