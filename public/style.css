@@ -1,0 +1,24 @@
+:root { color-scheme: dark; font-family: 'Courier New', 'Apple SD Gothic Neo', monospace; color: #dbdbca; background: #141b26; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 850px; padding: 65px 35px 30px; margin: auto; }
+header { display: flex; align-items: baseline; gap: 20px; border-bottom: 1px solid #4c5145; padding-bottom: 23px; }
+h1 { font-size: 32px; letter-spacing: -2px; margin: 0; }
+h1 span { color: #b9bc8d; }
+header p { font-size: 12px; color: #909786; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid #ded7ac; outline-offset: 8px; }
+.game { display: grid; grid-template-columns: 1fr 1fr; position: relative; margin: 42px 0 60px; border-bottom: 1px solid #4c5145; padding: 35px 0 60px; gap: 45px; }
+.number { position: absolute; top: 0; left: 0; font: 11px monospace; color: #7f8d7c; }
+.drawing { height: 250px; display: grid; place-items: center; position: relative; background: radial-gradient(ellipse at center, #343d4b, transparent 70%); }
+.label { align-self: center; }
+h2 { margin: 0; font-size: 31px; line-height: 1.4; letter-spacing: -1px; }
+.label p { font-size: 12px; color: #989e8e; line-height: 1.9; margin: 20px 0 30px; }
+.play { font-size: 13px; color: #dbbd8b; border-bottom: 1px solid #817257; padding-bottom: 7px; }
+footer { font-size: 11px; color: #7f8879; display: flex; justify-content: space-between; }
+@media(max-width:600px) { main { padding: 35px 24px; } header { justify-content: space-between; gap: 10px; } header p { font-size: 10px; } .game { grid-template-columns: 1fr; gap: 35px; margin-top: 30px; } .label { padding-left: 12px; } h2 { font-size: 28px; } .drawing { height: 230px; } }
+
+.drawing img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; image-rendering: pixelated; }
+.prototype-link { display: flex; align-items: center; gap: 12px; margin: -15px 0 35px; padding: 18px 0; border-bottom: 1px solid #4c5145; font-size: 14px; }
+.prototype-link span { color: #dbbd8b; font-size: 10px; }
+.prototype-link b { margin-left: auto; }

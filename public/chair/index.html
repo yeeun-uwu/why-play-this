@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#edf0e7">
+  <title>의자로 퇴근하기 · 이걸왜함</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <a href="../" class="back">← 이걸왜함</a><span class="edition">작은 시연 002</span>
+      <h1>의자로 <em>퇴근하기</em></h1>
+      <p class="intro">일어나긴 싫고, 집에는 가고 싶고.</p>
+    </header>
+    <div class="hud">
+      <div><span class="eyebrow">남은 발구르기</span><div id="kicks" class="kicks" aria-label="3번 남음"><i></i><i></i><i></i><b>3</b></div></div>
+      <p>세 번 안에<br><strong>엘리베이터 안에 멈추세요.</strong></p>
+    </div>
+    <div id="collection-target" hidden><div><strong id="target-name"></strong><p id="target-condition"></p></div><button id="target-clear" aria-label="수집 목표 해제">×</button></div>
+    <div class="playfield">
+      <canvas id="game" width="520" height="660" tabindex="0" aria-label="사무실. 아래쪽 의자를 오른쪽 위 엘리베이터로 옮기세요. 책상과 쓰레기통을 피하세요. 시작 배치는 판마다 달라집니다." aria-describedby="instructions keyboard-help">이 게임은 Canvas를 지원하는 브라우저가 필요합니다.</canvas>
+      <div id="pause-cover" hidden><strong>잠깐 쉬는 중</strong><button id="resume">계속하기 →</button></div>
+    </div>
+    <section class="feedback" aria-live="polite" aria-atomic="true">
+      <h2 id="status">의자를 가고 싶은 쪽으로 드래그</h2>
+      <p id="instructions">길게 끌수록 세게. 움직일 때 반대로 밀면 브레이크!</p>
+    </section>
+    <div class="actions"><button id="restart" class="primary">새 배치로 다시 ↻</button><button id="pause">잠깐 멈춤</button></div>
+    <div class="journal-actions"><button id="collection-open">퇴근길 도감 <b id="collection-count"></b></button><button id="result-open" hidden>이번 결과 보기</button></div>
+    <details><summary>키보드로도 할 수 있어요</summary><p id="keyboard-help">게임 화면을 선택한 뒤 ← → 방향 조절 · ↑ ↓ 힘 조절 · Space 발구르기 · Esc 조준 취소 / 일시정지. Tab으로 다른 버튼에 이동할 수 있어요.</p></details>
+    <footer>퇴근길은 짧게. 미련은 길게.</footer>
+    <noscript>플레이하려면 JavaScript를 켜 주세요.</noscript>
+  </main>
+  <dialog id="journal" aria-labelledby="journal-title">
+    <div class="journal-header"><span id="journal-label">퇴근길 감정서</span><button id="journal-close" aria-label="도감과 결과 창 닫기">닫기 ×</button></div>
+    <h2 id="journal-title" tabindex="-1"></h2>
+    <section id="result-view">
+      <div id="acquisition" hidden role="status" aria-atomic="true">
+        <span id="acquisition-mark" aria-hidden="true"></span>
+        <div><small>NEW COLLECTION</small><strong id="acquisition-title"></strong><p id="acquisition-name"></p></div>
+        <div id="acquisition-particles" aria-hidden="true"></div>
+      </div>
+      <div class="assessment"><span id="route-number"></span><div id="route-rarity"></div><h3 id="route-name"></h3><p id="route-reason"></p></div>
+      <div class="route-summary">
+        <figure><canvas id="route-map" width="520" height="660" role="img" aria-label="이 시도의 실제 이동 경로와 멈춘 위치"></canvas><figcaption>초록: 출발 · 주황: 이동 · 끝점: 멈춘 곳</figcaption></figure>
+        <dl id="route-stats"></dl>
+      </div>
+      <p id="unlock-message" class="unlock-message"></p>
+      <div id="earned-badges" class="earned-badges"></div>
+      <div class="result-actions"><button id="result-retry" class="primary">새 배치 도전 ↻</button><button id="result-collection">도감 보기</button></div>
+      <button id="retry-same" class="same-layout">같은 배치로 재도전 →</button>
+    </section>
+    <section id="collection-view" hidden>
+      <p class="collection-intro">성공도 삽질도 수집합니다.<br>미발견 카드를 누르면 다음 수집 목표가 됩니다.</p>
+      <div id="chapter-progress" class="chapter-progress"></div>
+      <div id="rarity-progress" class="rarity-progress"></div>
+      <div class="collection-filters">
+        <label>분류<select id="category-filter"><option value="all">전체 분류</option></select></label>
+        <label>레어도<select id="rarity-filter"><option value="all">전체 등급</option></select></label>
+      </div>
+      <label class="missing-filter"><input id="missing-only" type="checkbox"> 아직 못 모은 경로만</label>
+      <p id="collection-visible-count" class="collection-visible-count" aria-live="polite"></p>
+      <div id="collection-grid" class="collection-grid"></div>
+      <p id="collection-empty" hidden>이 조건에 해당하는 경로가 없어요. 다른 분류나 등급을 골라 보세요.</p>
+      <p class="rarity-note">레어도는 달성 난도에 따른 등급이에요. 같은 조건을 달성하면 언제나 얻을 수 있어요.</p>
+      <button id="collection-result" class="primary" hidden>이번 결과로 돌아가기</button>
+    </section>
+    <p id="storage-note" class="storage-note">이 브라우저에 저장돼요. 브라우저 데이터를 지우면 도감도 사라져요.</p>
+  </dialog>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>

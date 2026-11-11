@@ -1,0 +1,91 @@
+:root { color-scheme: dark; font-family: 'Courier New', 'Apple SD Gothic Neo', 'Malgun Gothic', monospace; color: #e9e7d9; background: #101a20; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #efcc87; outline-offset: 6px; }
+header { position: absolute; z-index: 3; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; font-size: 12px; color: #abb8b8; }
+header button { background: none; border: 1px solid #627572; border-radius: 0; color: #d8dfd5; padding: 10px 14px; min-height: 44px; }
+.clock { font-family: monospace; letter-spacing: 1px; color: #99aaa5; }
+main { position: relative; min-height: 440px; height: calc(100svh - 48px); }
+.title { position: absolute; top: 76px; z-index: 2; left: 24px; pointer-events: none; }
+h1 { font-size: 14px; font-weight: 600; color: #d9e0d6; margin: 0; letter-spacing: 0; }
+.kitchen { width: 100%; height: 100%; position: relative; overflow: hidden; }
+canvas { position: absolute; display: block; image-rendering: pixelated; }
+#timer, #action { position: absolute; z-index: 2; transform: translate(-50%, -50%) rotate(0deg); }
+#timer { top: 42%; left: 70%; width: 70px; font: bold 22px monospace; color: #c0e79d;  white-space: nowrap; text-align: center; pointer-events: none; }
+#action { top: 60%; left: 70%; width: 80px; min-height: 44px; border: 2px solid #b57351; border-right-color: #382d29; border-bottom-color: #382d29; background: #803d2c; color: #fff4d9; font-size: 12px; font-weight: 700; border-radius: 0; box-shadow: none; padding: 5px; touch-action: manipulation; }
+#action:active { filter: brightness(.8); }
+#action:disabled { opacity: .5; }
+[data-state=running] #action { background: #8c4130; }
+[data-state=failure] #timer { color: #ffbc8c; }
+.subtitles { position: absolute; bottom: 54px; width: 100%; text-align: center; pointer-events: none; padding: 0 20px; text-shadow: 1px 2px #101620; }
+.subtitles h2 { font-size: 18px; margin: 0 0 8px; font-weight: 600; }
+.subtitles p { color: #d5d7cd; font-size: 13px; margin: 0; }
+.subtitles #result { color: #e9d2a3; font: 17px monospace; margin-top: 12px; }
+.input-hint { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #c2c8ce; }
+.input-hint span { margin-left: 15px; color: #7f938e; }
+kbd { border: 1px solid #55645f; border-radius: 0; padding: 3px 6px; font-size: 10px; }
+footer { position: relative; padding: 0 24px; display: flex; justify-content: space-between; color: #93a59e; font-size: 12px; border-top: 1px solid #263632; }
+summary { cursor: pointer; padding: 14px 0; min-height: 44px; }
+.notes { max-width: 520px; line-height: 1.9; padding: 15px 0; color: #b5c2bb; }
+.notes strong { color: #efdfbc; margin-left: 12px; }
+.skip { position: fixed; top: -80px; z-index: 10; background: #e9e7d9; color: #101a20; padding: 14px; }
+.skip:focus { top: 0; }
+.fallback-oven { display: none; }
+.no-art canvas { visibility: hidden; }
+.no-art .fallback-oven { display: flex; position: absolute; left: 10%; top: 32%; width: 80%; height: 30%; background: #a1aa99; border: 12px solid #525e51; border-radius: 0; color: #17221a; padding: 20px; gap: 20px; }
+.fallback-oven div { background: #222e25; color: #d3c5a4; padding: 30px; }
+#render-note { position: absolute; top: 67%; width: 100%; text-align: center; font-size: 11px; color: #becbc4; }
+.no-art #timer { left: 75%!important; top: 40%!important; }
+.no-art #action { left: 75%!important; top: 54%!important; }
+@media(max-width: 700px) {
+  header { padding: 16px 20px; }
+  .clock { font-size: 10px; letter-spacing: 1px; }
+  main { height: calc(100svh - 48px); min-height: 440px; }
+  .title { left: 24px; top: 76px; }
+  .subtitles { bottom: 58px; }
+  .subtitles h2 { font-size: 19px; }
+  .subtitles p { font-size: 12px; }
+  .input-hint span { display: block; margin: 12px 0 0; }
+  footer { padding: 0 20px; }
+}
+@media(prefers-reduced-motion: reduce) { * { scroll-behavior: auto!important; } }
+
+.subtitles h2:empty, .subtitles p:empty { display: none; }
+
+@media(max-height: 500px) and (min-width: 700px) { .title { top: 64px; } .subtitles { bottom: 40px; } main { min-height: 330px; } }
+
+/* The painted red key owns its shape; the real button supplies focus and input. */
+.kitchen { background: #10151f; }
+#timer, #action { transform: translate(-50%, -50%) rotate(-3deg); }
+#timer { color: #b9ee73; text-shadow: 1px 0 #789744; }
+#action { background: transparent; border-color: transparent; min-height: 44px; color: #e6c9a7; }
+[data-state=running] #action { background: transparent; }
+#action:hover { background: #fbd48e18; }
+.no-art #action { background: #803d2c; }
+
+/* State feedback stays legible without relying on sound. */
+.title { top: 64px; left: 0; width: 100%; text-align: center; }
+h1 { font-size: clamp(18px, 2.4vw, 26px); text-shadow: 2px 2px #0a0d15; }
+.situation { position: absolute; z-index: 2; top: 100px; width: 100%; margin: 0; text-align: center; color: #edcf9b; font-size: 13px; text-shadow: 2px 2px #0a0d15; pointer-events: none; }
+.urgent { display: none; }
+[data-critical=true] .quiet { display: none; }
+[data-critical=true] .urgent { display: inline; color: #ffd77a; }
+[data-state=success] .situation, [data-state=failure] .situation { display: none; }
+[data-critical=true] #timer { color: #ffdb6e; }
+#action { font-weight: 900; }
+#action:active { transform: translate(-50%, calc(-50% + 3px)) rotate(-3deg); }
+#family-line { position: absolute; z-index: 3; top: 24%; right: max(80px, calc((100% - 640px) / 2 + 100px)); padding: 12px 16px; background: #ede2bf; color: #272434; border: 3px solid #272434; box-shadow: 4px 4px #080b14; font-weight: bold; font-size: clamp(18px, 3vw, 26px); }
+.subtitles { bottom: 52px; }
+main:has([data-state=success]) .subtitles, main:has([data-state=failure]) .subtitles { background: #0d1322eb; border-block: 2px solid #8e8365; padding: 16px 12px; }
+.subtitles h2 { font-size: clamp(26px, 4vw, 42px); color: #f5ddb0; }
+.subtitles #result { font-size: clamp(18px, 2.5vw, 26px); font-weight: bold; }
+main:has([data-state=failure]) .subtitles h2 { color: #ffad75; }
+@media(max-height:500px) and (min-width:700px) {
+ .title { top: 48px; } h1 { font-size: 18px; } .situation { top: 74px; }
+ .subtitles { bottom: 28px; } .subtitles h2 { font-size: 22px; }
+ main:has([data-state=success]) .subtitles, main:has([data-state=failure]) .subtitles { padding: 4px; }
+ .subtitles #result { font-size: 16px; margin-top: 4px; }
+}
+#action { white-space: nowrap; padding: 2px 0; }
