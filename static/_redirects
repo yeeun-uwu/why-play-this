@@ -1,0 +1,3 @@
+# Retired game routes must override cached assets from earlier deployments.
+/microwave /removed-game 302
+/microwave/* /removed-game 302
