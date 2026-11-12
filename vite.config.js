@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 export default defineConfig({
   root: 'public',
   publicDir: false,
-  base: '/why-play-this/',
+  base: './',
   build: {
     outDir: '../dist',
     emptyOutDir: true,

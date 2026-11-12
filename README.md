@@ -2,7 +2,9 @@
 
 이상한 미니게임 보관함. 첫 게임은 **전자레인지 1초 전에 끄기**입니다.
 
-바로 플레이: [게임 목록](https://yeeun-uwu.github.io/why-play-this/) · [전자레인지](https://yeeun-uwu.github.io/why-play-this/microwave/) · [의자로 퇴근하기](https://yeeun-uwu.github.io/why-play-this/chair/)
+게임 기획은 **개인 업적·수집 도감·자기 기록**을 중심으로 합니다. 새로운 결과 발견, 도감 완성, 개인 기록 갱신을 재도전의 목표로 삼고, 각 게임의 핵심 조작에 맞는 요소를 선택합니다.
+
+바로 플레이: [게임 목록](https://why-play-this.pages.dev/) · [전자레인지](https://why-play-this.pages.dev/microwave/) · [의자로 퇴근하기](https://why-play-this.pages.dev/chair/)
 
 ## 로컬 개발
 
@@ -17,11 +19,11 @@ npm run build
 npm run preview
 ```
 
-개발 서버: `http://127.0.0.1:4173/why-play-this/` (개발용 컴퓨터에서만 접속)
+개발 서버: `http://127.0.0.1:4173/` (개발용 컴퓨터에서만 접속)
 
 ## 의자로 퇴근하기 — 재미 검증 시연
 
-[공개 게임 플레이](https://yeeun-uwu.github.io/why-play-this/chair/)
+[공개 게임 플레이](https://why-play-this.pages.dev/chair/)
 
 의자를 가고 싶은 방향으로 드래그했다 놓으면 바닥을 한 번 찹니다. 길게 끌수록 세게 밀리며, 움직이는 중에도 반대쪽으로 밀어 제동할 수 있습니다. 세 번 안에 의자 전체가 엘리베이터 안에서 멈추면 성공합니다. 책상은 고정되어 있고 쓰레기통은 밀립니다. 지나온 경로와 발구르기 위치가 결과에 남습니다.
 
@@ -76,24 +78,24 @@ npm run preview
 
 게임 배경 PNG는 약 1.63MB, 회전 스프라이트는 약 563kB, 손·가족 원본은 합계 약 2.48MB이며 목록용 원본은 약 1.61MB입니다. 이미지가 없으면 간단한 화면으로 플레이할 수 있습니다.
 
-## 저장과 전체 랭킹
+## 개인 기록 저장
 
 최고 기록은 localStorage의 `why-play-this:microwave:best:v1`에 남은 밀리초로 저장합니다. 동점이면 남은 시간이 더 적은 기록을 유지합니다. 저장이 차단되면 현재 페이지에서만 기록을 유지합니다. 브라우저 데이터 삭제 시 사라지며 다른 기기로 동기화하지 않습니다.
 
-전체 이용자 TOP 100은 **연결 준비 중**입니다. 외부 DB, 가짜 이용자·순위는 없습니다. 조작 가능한 로컬 기록을 전체 랭킹 검증에 사용할 수는 없습니다.
+현재는 게임별 브라우저 로컬 저장소를 사용하며, 전체 이용자 랭킹은 기본 기획 범위에 포함하지 않습니다. 별도 계정·게임 서버·DB 없이 정적 사이트로 운영합니다. 기록 백업과 기기 간 동기화는 구현되어 있지 않습니다.
 
-## GitHub Pages
+## Cloudflare Pages 배포
 
-Vite는 목록, 전자레인지, 전자레인지 3D 시연, 의자 퇴근 시연의 HTML 진입점을 `dist/`로 빌드합니다. 프로젝트 기본 경로는 `/why-play-this/`이고 게임별 `index.html`을 제공하므로 하위 페이지 직접 접속이 됩니다.
+2026-11-12에 Cloudflare Pages의 `why-play-this` 프로젝트로 공개해 블로그 도메인과 분리했습니다. HTML·CSS·JavaScript·이미지만 올린 무료 정적 호스팅이며, Functions·DB·유료 부가 기능은 사용하지 않습니다.
 
-2026-11-11에 GitHub Pages 공개 배포를 완료했습니다. 저장소 Pages는 GitHub Actions 방식으로 설정되어 있습니다.
+공개 사이트: [이걸왜함](https://why-play-this.pages.dev/)
 
-공개 사이트: [이걸왜함](https://yeeun-uwu.github.io/why-play-this/)
+Vite는 목록, 전자레인지, 전자레인지 3D 시연, 의자 퇴근 시연의 HTML 진입점을 `dist/`로 빌드합니다. 자산 경로는 상대 경로(`base: './'`)를 사용하며, 게임별 `index.html`을 제공하므로 `/chair/`, `/microwave/`로 직접 접속할 수 있습니다.
 
-`.github/workflows/pages.yml`은 **수동 실행 전용**입니다. 이후 배포도 별도 게시 승인 후 변경을 main에 반영하고 워크플로를 main에서 실행합니다. npm ci → 테스트 → 빌드가 통과한 뒤 `dist/`만 게시합니다.
+배포는 **수동 Direct Upload** 방식입니다. 게시 승인 후 `npm ci` → `npm test` → `npm run build`를 실행하고, Cloudflare 대시보드의 `why-play-this` 프로젝트에서 `dist/` 폴더 또는 그 내부 파일을 담은 ZIP을 프로덕션 배포로 업로드합니다. 소스·개발 문서·`node_modules/`는 업로드하지 않습니다. Git push만으로 Cloudflare 사이트가 갱신되지는 않습니다.
 
-최초 배포에서는 테스트 51개·빌드·Pages 게시를 통과했습니다. 공개 주소에서 게임 목록, 전자레인지 시작/정지, 의자 입력·일시정지·재시작·도감, 각 게임과 3D 시연의 직접 접속을 확인했습니다. 메인과 의자 화면은 320px에서도 가로 넘침이 없음을 확인했습니다. [배포 실행 기록](https://github.com/yeeun-uwu/why-play-this/actions/runs/42967216999)
+테스트 51개와 빌드가 통과했습니다. 새 공개 주소에서 게임 목록, 전자레인지 시작/정지, 의자 입력·일시정지·재시작·도감, 각 게임과 3D 시연의 직접 접속을 확인했습니다. 의자 화면은 320px에서도 가로 넘침이 없음을 확인했습니다.
 
-설정 참고: https://vite.dev/guide/static-deploy.html#github-pages
+이전 GitHub Pages 배포는 2026-11-11에 완료했습니다. 기존 `.github/workflows/pages.yml`은 수동 실행 전용으로 남아 있으며 Cloudflare 배포와는 별개입니다. [이전 배포 기록](https://github.com/yeeun-uwu/why-play-this/actions/runs/42967216999) · [Cloudflare Direct Upload 안내](https://developers.cloudflare.com/pages/get-started/direct-upload/)
 
-실제 모바일 터치·스피커 청음·스크린리더는 아직 별도 확인 대상입니다. 로컬 개발 주소의 최고 기록·도감은 공개 사이트로 자동 이전되지 않습니다.
+실제 모바일 터치·스피커 청음·스크린리더는 아직 별도 확인 대상입니다. 로컬 개발 주소나 이전 GitHub Pages 주소의 최고 기록·도감은 새 도메인으로 자동 이전되지 않습니다.
